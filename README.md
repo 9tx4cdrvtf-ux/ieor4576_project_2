@@ -2,7 +2,7 @@ Disney Parks around the World
 
 Real-time queue times data: https://queue-times.com/en-US
 
-information in RAG: The intro of each Ride in each disney world
+information in RAG: The intro of each Ride in each disney park
 
 ## Run (local)
 
@@ -10,6 +10,7 @@ Prerequisites: Python 3.11+, [uv](https://docs.astral.sh/uv/), Google Cloud proj
 
 ```bash
 uv sync
+uv run python index_rides.py
 uv run python app.py
 ```
 
