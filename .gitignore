@@ -1,0 +1,26 @@
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Environment / secrets
+.env
+*.key
+*.pem
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ChromaDB index (build artifact — regenerate by running: python index_rides.py)
+chroma_data/
+
+# ADK session state
+**/.adk/

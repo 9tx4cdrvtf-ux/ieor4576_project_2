@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Disney Queue Agent</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, sans-serif;
+      max-width: 720px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.25rem; }
+    #log {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      min-height: 200px;
+      white-space: pre-wrap;
+      background: #fafafa;
+      margin-bottom: 1rem;
+    }
+    .row { display: flex; gap: 0.5rem; }
+    input[type="text"] {
+      flex: 1;
+      padding: 0.5rem 0.75rem;
+      font-size: 1rem;
+    }
+    button {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .muted { color: #555; font-size: 0.875rem; margin-top: 1rem; }
+    a { color: #0b57d0; }
+  </style>
+</head>
+<body>
+  <h1>Disney parks queue assistant</h1>
+  <p class="muted">Powered by live data from Queue Times. Attribution required:</p>
+  <p><a href="https://queue-times.com/" target="_blank" rel="noopener">Powered by Queue-Times.com</a></p>
+  <div id="log"></div>
+  <div class="row">
+    <input type="text" id="msg" placeholder="Ask about waits, parks, or plans…" autocomplete="off" />
+    <button type="button" id="send">Send</button>
+  </div>
+  <p class="muted">Session: <span id="sid">(new)</span></p>
+
+  <script>
+    const log = document.getElementById("log");
+    const input = document.getElementById("msg");
+    const send = document.getElementById("send");
+    const sidEl = document.getElementById("sid");
+    let sessionId = null;
+
+    function append(role, text) {
+      log.textContent += (log.textContent ? "\n\n" : "") + role + ": " + text;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function postChat() {
+      const text = input.value.trim();
+      if (!text) return;
+      input.value = "";
+      append("You", text);
+      send.disabled = true;
+      try {
+        const res = await fetch("/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, session_id: sessionId }),
+        });
+        const raw = await res.text();
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch {
+          append("Error", "Server returned non-JSON (" + res.status + "): " + raw.slice(0, 500));
+          return;
+        }
+        if (!res.ok) {
+          const detail = data.detail;
+          const msg = typeof detail === "string" ? detail : JSON.stringify(detail ?? data);
+          append("Error", msg);
+          return;
+        }
+        sessionId = data.session_id;
+        sidEl.textContent = sessionId;
+        append("Agent", data.response || "(empty)");
+      } catch (e) {
+        append("Error", String(e));
+      }
+      send.disabled = false;
+    }
+
+    send.addEventListener("click", postChat);
+    input.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") postChat();
+    });
+  </script>
+</body>
+</html>
