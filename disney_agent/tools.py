@@ -306,7 +306,17 @@ def compare_parks_crowd_by_names(park_name_queries_csv: str) -> str:
 
 
 def summarize_park_waits(park_id: int) -> str:
-    """Summarize live wait times for a park: overall stats and breakdown by land.
+    """
+    Fetch a comprehensive real-time wait time report for a specific park, including detailed statistics by land/area.
+    
+    You MUST call this tool when the user's intent involves:
+    1. Overall Park Status: Questions like "Is the park crowded right now?" or "What is the general wait time?"
+    2. Ranking & Extremes: Identifying specific rides with the "shortest," "longest," or "top 3" wait times.
+    3. Area Comparisons: Comparing crowd levels between different lands (e.g., "Is Pandora busier than Africa?").
+    4. Operational Capacity: Checking the park's opening rate (e.g., "How many rides are currently operating?").
+
+    The returned JSON provides park-wide metrics (mean, median, max, min, count of rides_open, count of total rides), a 'by_land' breakdown, and the specific wait times of all rides. 
+    To identify specific ride names for "shortest/longest" queries, examine the detailed ride lists or statistical extremes provided in the output.
 
     Use resolve_park_name first to get the park_id from a natural language name.
     """
@@ -327,10 +337,15 @@ def summarize_park_waits(park_id: int) -> str:
     df = pd.DataFrame(rows)
     open_df = df[df["is_open"] == True].copy()  # noqa: E712
     waits = pd.to_numeric(open_df["wait_time"], errors="coerce").dropna()
+    waits = waits.sort_values(ascending=True)
+    rides_wait_time = (
+        open_df[["ride", "wait_time"]].sort_values(by="wait_time", ascending=True)
+        .to_dict(orient="records")
+    )
 
     by_land = (
         open_df.groupby("land")["wait_time"]
-        .agg(["mean", "median", "max", "count"])
+        .agg(["mean", "median", "max", "min", "count"])
         .round(1)
         .reset_index()
         .to_dict(orient="records")
@@ -343,7 +358,9 @@ def summarize_park_waits(park_id: int) -> str:
         "wait_mean": round(float(waits.mean()), 1) if len(waits) else None,
         "wait_median": round(float(waits.median()), 1) if len(waits) else None,
         "wait_max": int(waits.max()) if len(waits) else None,
+        "wait_min": int(waits.min()) if len(waits) else None,
         "by_land": by_land,
+        "rides_wait_time": rides_wait_time
     })
 
 

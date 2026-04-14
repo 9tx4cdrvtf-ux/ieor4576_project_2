@@ -63,8 +63,10 @@ _planner_tools = [
 
 # root: handles only simple direct lookups; everything else is routed
 _root_tools = [
+    resolve_park_name,                   # resolve name → park_id for summarize/EDA tools
     get_current_wait_natural_language,   # 'What is the wait for X right now?'
     list_disney_parks,                   # 'List Disney parks'
+    summarize_park_waits,                # full park wait stats by land (live)
 ]
 
 # ---------------------------------------------------------------------------
@@ -196,9 +198,10 @@ root_agent = LlmAgent(
         "  - 'Which park should I go to today?'\n"
         "  - Any ride recommendation or visit planning question\n"
         "\n"
-        "→ Handle yourself ONLY for:\n"
+        "→ Handle yourself for:\n"
         "  - 'What is the current wait for [specific ride]?' → get_current_wait_natural_language\n"
         "  - 'List Disney parks' → list_disney_parks\n"
+        "  - 'Which ride has the longest/shortest wait?' or 'summarize Park overview' or 'average wait times right now' → summarize_park_waits\n"
         "\n"
         "NEVER announce transfers. NEVER refuse in-scope requests. "
         "For out-of-scope questions, politely explain what the system can and cannot do."
