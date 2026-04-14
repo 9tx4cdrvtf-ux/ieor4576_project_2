@@ -1,5 +1,10 @@
 Disney Parks around the World
 
+## Live URL
+live url: 
+
+## Data Source
+
 Real-time queue times data: https://queue-times.com/en-US
 
 information in RAG: The intro of each Ride in each disney park
@@ -9,9 +14,8 @@ information in RAG: The intro of each Ride in each disney park
 Prerequisites: Python 3.11+, [uv](https://docs.astral.sh/uv/), Google Cloud project with Vertex AI. Copy `.env.example` to `.env` and set `VERTEXAI_PROJECT` and `VERTEXAI_LOCATION`.
 
 ```bash
-uv sync
-uv run python index_rides.py
-uv run python app.py
+uv run index_rides.py
+uv run app.py
 ```
 
 Open http://127.0.0.1:8000 . The UI includes a link to [Powered by Queue-Times.com](https://queue-times.com/) as required by the Queue Times API.
