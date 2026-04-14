@@ -108,10 +108,9 @@ h1.title {
   pointer-events:none;
 }
 .map-cap {
-  font-size:0.65rem;color:var(--text-dim);
+  font-size:0.68rem;color:var(--text-dim);
   text-transform:uppercase;letter-spacing:0.12em;
-  text-align:center;margin-bottom:0.3rem;font-weight:700;
-  flex-shrink:0;
+  text-align:center;margin-bottom:0.5rem;font-weight:700;
 }
 #map-svg{width:100%;flex:1;min-height:0;display:block;overflow:visible;}
 
@@ -143,28 +142,28 @@ h1.title {
 
 /* QUICK PILLS */
 .quick-wrap {
-  flex-shrink:0;
+  margin-bottom:1.3rem;
   transition:opacity 0.45s ease, max-height 0.5s ease, margin 0.5s ease;
-  max-height:120px;overflow:hidden;
+  max-height:200px;overflow:hidden;
 }
 .quick-wrap.gone {
-  opacity:0;max-height:0;pointer-events:none;
+  opacity:0;max-height:0;margin-bottom:0;pointer-events:none;
 }
 .quick-label {
-  font-size:0.65rem;color:var(--text-dim);
+  font-size:0.68rem;color:var(--text-dim);
   text-transform:uppercase;letter-spacing:0.12em;
-  text-align:center;margin-bottom:0.5rem;font-weight:700;
+  text-align:center;margin-bottom:0.7rem;font-weight:700;
 }
 .pills {
-  display:flex;flex-wrap:wrap;gap:0.5rem;justify-content:center;
+  display:flex;flex-wrap:wrap;gap:0.65rem;justify-content:center;
 }
 
 /* Colourful pills — always visible */
 .pill {
-  display:flex;align-items:center;gap:0.4rem;
-  padding:0.42rem 0.9rem;
+  display:flex;align-items:center;gap:0.45rem;
+  padding:0.55rem 1.1rem;
   border-radius:999px;
-  font-size:0.8rem;font-weight:600;
+  font-size:0.84rem;font-weight:600;
   cursor:pointer;
   border:1.5px solid;
   font-family:'Nunito',sans-serif;
@@ -193,13 +192,14 @@ h1.title {
 
 /* CHAT */
 .chat-box {
-  flex:1;
-  min-height:0;
+  flex:none;
+  height:38vh;
   display:flex;flex-direction:column;
   background:var(--glass);
   border:1px solid var(--glass-border);
   border-radius:18px;
   overflow:hidden;
+  min-height:0;
 }
 
 #log {
@@ -296,9 +296,8 @@ h1.title {
 #send:disabled{opacity:0.38;cursor:not-allowed;transform:none;}
 
 .sid-row {
-  text-align:center;padding:0.2rem;
-  font-size:0.65rem;color:rgba(170,160,210,0.28);
-  flex-shrink:0;
+  text-align:center;padding:0.35rem;
+  font-size:0.68rem;color:rgba(170,160,210,0.28);
 }
 </style>
 </head>
@@ -326,7 +325,7 @@ h1.title {
     <div class="pills">
       <button class="pill pill-a" data-q="Which ride has the shortest wait time at Magic Kingdom right now?">✨ Shortest wait at Magic Kingdom?</button>
       <button class="pill pill-b" data-q="What's the average wait time across all rides at Animal Kingdom right now?">✨ Animal Kingdom crowd levels?</button>
-      <button class="pill pill-c" data-q="I love rollercoasters — what are the best thrill rides at Animal Kingdom with the shortest waits right now?">✨ Best thrill rides at Animal Kingdom?</button>
+      <button class="pill pill-c" data-q="I love rollercoasters — which Disney theme park should I visit today for the best thrill rides with shortest waits?">✨ Best park for rollercoasters today?</button>
     </div>
   </div>
 
