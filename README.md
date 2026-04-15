@@ -1,7 +1,21 @@
-Disney Parks around the World
+# Disney Parks Queue Oracle
+Disney Parks Queue Oracle is an AI-powered assistant that helps you make smarter decisions at Disney theme parks worldwide. Built with Google ADK and Vertex AI (Gemini), it combines live wait-time data, historical analytics, and a semantic ride database to answer questions in natural language — no app switching, no guesswork.
+What it can do:
+
+🎢 Live wait times — get current queue times for any ride across all Disney parks worldwide
+📊 Historical insights — find the best time of day or month to ride, and see how today's waits compare to historical averages
+🗺️ Ride recommendations — describe what you're looking for ("thrilling roller coasters", "gentle rides for a 5-year-old") and get personalized suggestions with live waits
+🌍 Park comparison — find out which park is least crowded right now
+
+Powered by:
+
+Queue-Times.com for live wait data
+Google Vertex AI (Gemini 2.0 Flash) for natural language understanding
+ChromaDB for semantic search across 400+ Disney ride descriptions
+BigQuery for historical wait-time analytics
 
 ## Live URL
-live url: 
+**live url**: https://disney-queue-agent-new-505448524679.us-central1.run.app/
 
 ## Data Source
 
