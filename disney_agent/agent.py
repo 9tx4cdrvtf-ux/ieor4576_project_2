@@ -33,7 +33,7 @@ from disney_agent.tools import (
     summarize_park_waits,
 )
 
-MODEL = LiteLlm(model="vertex_ai/gemini-2.0-flash-lite")
+MODEL = LiteLlm(model="vertex_ai/gemini-2.0-flash")
 
 # ---------------------------------------------------------------------------
 # Tool lists — each agent gets only what it actually needs
